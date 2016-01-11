@@ -41,3 +41,5 @@ validusernameregex = None
 validusernamelength = None
 
 version = None
+
+autoreload = False

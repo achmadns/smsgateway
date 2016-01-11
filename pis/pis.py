@@ -233,6 +233,8 @@ class PisServer(object):
                                 ipaddress})
         cherrypy.config.update({'server.socket_port':
                                 int(pisport)})
+        cherrypy.config.update({'engine.autoreload_on':
+                                    cfg.getvalue('autoreload', False, 'pis')})
         MyWebSocketPlugin(cherrypy.engine).subscribe()
         cherrypy.tools.websocket = WebSocketTool()
 

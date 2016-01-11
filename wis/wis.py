@@ -468,6 +468,8 @@ class Wisserver(object):
         wisglobals.sslprivatekey = cfg.getvalue('sslprivatekey', None, 'wis')
         wisglobals.sslcertificatechain = cfg.getvalue('sslcertificatechain', None, 'wis')
 
+        wisglobals.autoreload = cfg.getvalue('autoreload', False, 'pis')
+
         smsgwglobals.wislogger.debug("WIS: SSL " + str(wisglobals.sslenabled))
 
         if wisglobals.sslenabled is not None and 'true' in wisglobals.sslenabled.lower():
@@ -486,6 +488,8 @@ class Wisserver(object):
                                 wisglobals.wisipaddress})
         cherrypy.config.update({'server.socket_port':
                                 int(wisglobals.wisport)})
+        cherrypy.config.update({'engine.autoreload_on':
+                                wisglobals.autoreload})
         cherrypy.tree.mount(StatsLogstash(), '/smsgateway/api/stats/logstash', {'/': {'request.dispatch': cherrypy.dispatch.MethodDispatcher()}})
         cherrypy.quickstart(Root(), '/smsgateway',
                             'wis-web.conf')
